@@ -64,50 +64,40 @@ void RangeWidget::paintEvent(QPaintEvent *event)
 
 qreal RangeWidget::span() const
 {
-    int totRange = _maximum-_minimum;
-    totRange = (totRange < 0) ? -totRange : totRange;
-    qreal span;
+    int interval = qAbs(_maximum-_minimum);
+
     if(_orientation == Qt::Horizontal)
-        span = qreal(width()-_handleWidth)/qreal(totRange);
+        return qreal(width()-_handleWidth)/qreal(interval);
     else
-        span = qreal(height()-_handleWidth)/qreal(totRange);
-    return span;
+        return qreal(height()-_handleWidth)/qreal(interval);
 }
 
 QRectF RangeWidget::firstHandleRect() const
 {
-    qreal s = span();
-
-    QRectF rv1;
-    if(_orientation == Qt::Horizontal)
-    {
-        rv1 = QRectF(0, (height()-_handleHeight)/2, _handleWidth, _handleHeight);
-        rv1.moveLeft(s*(_firstValue-_minimum));
-    }
-    else
-    {
-        rv1 = QRectF((width()-_handleHeight)/2, 0, _handleHeight, _handleWidth);
-        rv1.moveTop(s*(_firstValue-_minimum));
-    }
-    return rv1;
+    return handleRect(_firstValue);
 }
 
 QRectF RangeWidget::secondHandleRect() const
 {
+    return handleRect(_secondValue);
+}
+
+QRectF RangeWidget::handleRect(int value) const
+{
     qreal s = span();
 
-    QRectF rv2;
+    QRectF r;
     if(_orientation == Qt::Horizontal)
     {
-        rv2 = QRectF(0, (height()-_handleHeight)/2, _handleWidth, _handleHeight);
-        rv2.moveLeft(s*(_secondValue-_minimum));
+        r = QRectF(0, (height()-_handleHeight)/2, _handleWidth, _handleHeight);
+        r.moveLeft(s*(value-_minimum));
     }
     else
     {
-        rv2 = QRectF((width()-_handleHeight)/2, 0, _handleHeight, _handleWidth);
-        rv2.moveTop(s*(_secondValue-_minimum));
+        r = QRectF((width()-_handleHeight)/2, 0, _handleHeight, _handleWidth);
+        r.moveTop(s*(value-_minimum));
     }
-    return rv2;
+    return r;
 }
 
 void RangeWidget::mousePressEvent(QMouseEvent* event)
@@ -124,21 +114,21 @@ void RangeWidget::mouseMoveEvent(QMouseEvent* event)
 {
     if(event->buttons() & Qt::LeftButton)
     {
-        int totRange = qAbs(_maximum-_minimum);
+        int interval = qAbs(_maximum-_minimum);
 
         if(_secondHandlePressed)
         {
             if(_orientation == Qt::Horizontal)
-                setSecondValue(event->pos().x()*totRange/(width()-_handleWidth));
+                setSecondValue(event->pos().x()*interval/(width()-_handleWidth));
             else
-                setSecondValue(event->pos().y()*totRange/(height()-_handleWidth));
+                setSecondValue(event->pos().y()*interval/(height()-_handleWidth));
         }
         else if(_firstHandlePressed)
         {
             if(_orientation == Qt::Horizontal)
-                setFirstValue(event->pos().x()*totRange/(width()-_handleWidth));
+                setFirstValue(event->pos().x()*interval/(width()-_handleWidth));
             else
-                setFirstValue(event->pos().y()*totRange/(height()-_handleWidth));
+                setFirstValue(event->pos().y()*interval/(height()-_handleWidth));
         }
     }
 

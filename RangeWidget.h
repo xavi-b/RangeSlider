@@ -40,6 +40,7 @@ protected:
 
     QRectF firstHandleRect() const;
     QRectF secondHandleRect() const;
+    QRectF handleRect(int value) const;
     qreal span() const;
 
 public:
