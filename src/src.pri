@@ -1,0 +1,2 @@
+SOURCES += \
+    $$PWD/rangeslider.cpp

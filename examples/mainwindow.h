@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QHBoxLayout>
-#include "RangeWidget.h"
+#include "rangeslider.h"
 
 class MainWindow : public QMainWindow
 {

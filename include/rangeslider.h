@@ -1,16 +1,16 @@
-#ifndef RANGEWIDGET_H
-#define RANGEWIDGET_H
+#ifndef RANGESLIDER_H
+#define RANGESLIDER_H
 
 #include <QWidget>
 #include <QPainter>
 #include <QStyle>
 #include <QMouseEvent>
 
-class RangeWidget : public QWidget
+class RangeSlider : public QWidget
 {
     Q_OBJECT
 private:
-    Q_DISABLE_COPY(RangeWidget)
+    Q_DISABLE_COPY(RangeSlider)
 
     Qt::Orientation _orientation;
 
@@ -44,7 +44,7 @@ protected:
     qreal span() const;
 
 public:
-    RangeWidget(Qt::Orientation orientation = Qt::Vertical, QWidget *parent = nullptr);
+    RangeSlider(Qt::Orientation orientation = Qt::Vertical, QWidget *parent = nullptr);
 
     QSize minimumSizeHint() const;
 
@@ -73,4 +73,4 @@ public slots:
 
 };
 
-#endif // RANGEWIDGET_H
+#endif // RANGESLIDER_H

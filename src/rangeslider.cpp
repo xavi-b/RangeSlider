@@ -1,8 +1,6 @@
-#include "RangeWidget.h"
+#include "rangeslider.h"
 
-#include <QtDebug>
-
-RangeWidget::RangeWidget(Qt::Orientation orientation, QWidget *parent)
+RangeSlider::RangeSlider(Qt::Orientation orientation, QWidget *parent)
     : QWidget(parent),
       _orientation(orientation),
       _handleWidth(8),
@@ -19,7 +17,7 @@ RangeWidget::RangeWidget(Qt::Orientation orientation, QWidget *parent)
     setMouseTracking(true);
 }
 
-void RangeWidget::paintEvent(QPaintEvent *event)
+void RangeSlider::paintEvent(QPaintEvent *event)
 {
     QPainter p(this);
 
@@ -62,7 +60,7 @@ void RangeWidget::paintEvent(QPaintEvent *event)
     p.fillRect(rv2, c2);
 }
 
-qreal RangeWidget::span() const
+qreal RangeSlider::span() const
 {
     int interval = qAbs(_maximum-_minimum);
 
@@ -72,17 +70,17 @@ qreal RangeWidget::span() const
         return qreal(height()-_handleWidth)/qreal(interval);
 }
 
-QRectF RangeWidget::firstHandleRect() const
+QRectF RangeSlider::firstHandleRect() const
 {
     return handleRect(_firstValue);
 }
 
-QRectF RangeWidget::secondHandleRect() const
+QRectF RangeSlider::secondHandleRect() const
 {
     return handleRect(_secondValue);
 }
 
-QRectF RangeWidget::handleRect(int value) const
+QRectF RangeSlider::handleRect(int value) const
 {
     qreal s = span();
 
@@ -100,7 +98,7 @@ QRectF RangeWidget::handleRect(int value) const
     return r;
 }
 
-void RangeWidget::mousePressEvent(QMouseEvent* event)
+void RangeSlider::mousePressEvent(QMouseEvent* event)
 {
     if(event->buttons() & Qt::LeftButton)
     {
@@ -110,7 +108,7 @@ void RangeWidget::mousePressEvent(QMouseEvent* event)
     }
 }
 
-void RangeWidget::mouseMoveEvent(QMouseEvent* event)
+void RangeSlider::mouseMoveEvent(QMouseEvent* event)
 {
     if(event->buttons() & Qt::LeftButton)
     {
@@ -140,7 +138,7 @@ void RangeWidget::mouseMoveEvent(QMouseEvent* event)
     update(rv1.toRect());
 }
 
-void RangeWidget::mouseReleaseEvent(QMouseEvent* event)
+void RangeSlider::mouseReleaseEvent(QMouseEvent* event)
 {
     if(_firstHandlePressed || _secondHandlePressed)
         emit sliderReleased();
@@ -149,12 +147,12 @@ void RangeWidget::mouseReleaseEvent(QMouseEvent* event)
     _secondHandlePressed = false;
 }
 
-QSize RangeWidget::minimumSizeHint() const
+QSize RangeSlider::minimumSizeHint() const
 {
     return QSize(_handleHeight, _handleHeight);
 }
 
-void RangeWidget::setSecondValue(int secondValue)
+void RangeSlider::setSecondValue(int secondValue)
 {
     if(secondValue > _maximum)
         secondValue = _maximum;
@@ -168,7 +166,7 @@ void RangeWidget::setSecondValue(int secondValue)
     update();
 }
 
-void RangeWidget::setFirstValue(int firstValue)
+void RangeSlider::setFirstValue(int firstValue)
 {
     if(firstValue > _maximum)
         firstValue = _maximum;
@@ -182,7 +180,7 @@ void RangeWidget::setFirstValue(int firstValue)
     update();
 }
 
-void RangeWidget::setMaximum(int max)
+void RangeSlider::setMaximum(int max)
 {
     if(max >= minimum())
         _maximum = max;
@@ -204,13 +202,13 @@ void RangeWidget::setMaximum(int max)
     emit rangeChanged(minimum(), maximum());
 }
 
-void RangeWidget::setRange(int min, int max)
+void RangeSlider::setRange(int min, int max)
 {
     setMinimum(min);
     setMaximum(max);
 }
 
-void RangeWidget::setMinimum(int min)
+void RangeSlider::setMinimum(int min)
 {
     if(min <= maximum())
         _minimum = min;
@@ -232,7 +230,7 @@ void RangeWidget::setMinimum(int min)
     emit rangeChanged(minimum(), maximum());
 }
 
-void RangeWidget::setOrientation(Qt::Orientation orientation)
+void RangeSlider::setOrientation(Qt::Orientation orientation)
 {
     if(_orientation == orientation)
         return;
