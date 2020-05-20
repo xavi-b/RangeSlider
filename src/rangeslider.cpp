@@ -1,5 +1,8 @@
 #include "rangeslider.h"
 
+namespace XB
+{
+
 RangeSlider::RangeSlider(Qt::Orientation orientation, QWidget *parent)
     : QWidget(parent),
       _orientation(orientation),
@@ -237,4 +240,6 @@ void RangeSlider::setOrientation(Qt::Orientation orientation)
 
     _orientation = orientation;
     update();
+}
+
 }

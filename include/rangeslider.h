@@ -6,6 +6,9 @@
 #include <QStyle>
 #include <QMouseEvent>
 
+namespace XB
+{
+
 class RangeSlider : public QWidget
 {
     Q_OBJECT
@@ -72,5 +75,7 @@ public slots:
     void setOrientation(Qt::Orientation orientation);
 
 };
+
+}
 
 #endif // RANGESLIDER_H
