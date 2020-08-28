@@ -27,14 +27,18 @@ void RangeSlider::paintEvent(QPaintEvent *event)
     // First value handle rect
     QRectF rv1 = firstHandleRect();
     QColor c1(_firstHandleColor);
-    if(_firstHandleHovered)
+    if(this->isEnabled() && _firstHandleHovered)
         c1 = c1.darker();
+    if(!this->isEnabled())
+        c1 = c1.lighter();
 
     // Second value handle rect
     QRectF rv2 = secondHandleRect();
     QColor c2(_secondHandleColor);
-    if(_secondHandleHovered)
+    if(this->isEnabled() && _secondHandleHovered)
         c2 = c2.darker();
+    if(!this->isEnabled())
+        c2 = c2.lighter();
 
     // Background
     QRect r;
@@ -58,7 +62,12 @@ void RangeSlider::paintEvent(QPaintEvent *event)
         rf.setBottom(rv2.top());
         rf.setRight(rf.right()+1);
     }
-    p.fillRect(rf, QColor(Qt::green).darker(150));
+
+    QColor c3(Qt::darkGreen);
+    if(!this->isEnabled())
+        c3 = c3.lighter();
+
+    p.fillRect(rf, c3);
     p.fillRect(rv1, c1);
     p.fillRect(rv2, c2);
 }

@@ -5,7 +5,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     QHBoxLayout* layout = new QHBoxLayout;
     layout->addWidget(new XB::RangeSlider);
-    layout->addWidget(new XB::RangeSlider(Qt::Horizontal));
+    auto example = new XB::RangeSlider(Qt::Horizontal);
+    example->setDisabled(true);
+    layout->addWidget(example);
     QWidget* w = new QWidget;
     w->setLayout(layout);
     setCentralWidget(w);
