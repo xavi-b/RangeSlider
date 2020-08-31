@@ -5,6 +5,11 @@ QT             += widgets
 TARGET          = RangeSlider
 DESTDIR         = $$PWD
 
+unix {
+target.path = /usr/lib/
+INSTALLS += target
+}
+
 SUBDIRS += \
     $$PWD/../include \
     $$PWD/../src
